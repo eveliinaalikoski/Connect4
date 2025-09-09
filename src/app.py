@@ -5,14 +5,6 @@ class Connect4:
         self.cols = 7
         self.board = [[0 for col in range(self.cols)] for row in range(self.rows)]
         # print(self.board)
-        self.make_move(3, 2)
-        self.make_move(3, 1)
-        self.make_move(3, 2)
-        self.make_move(5, 2)
-        self.make_move(3, 1)
-        self.make_move(3, 1)
-        self.make_move(3, 2)
-        self.make_move(3, 1)
 
     def make_move(self, col, player):
         """lisää pelinappulan annettuun sarakkeeseen
@@ -22,10 +14,9 @@ class Connect4:
             col (int): sarakkeen numero 0-6
             player (int): pelaajan identifoiva numero 1=pelaaja ja 2=tekoäly
         """
+        print("C", col, "PLA", player)
         for row in range(self.rows-1, -1, -1):
             if self.board[row][col] == 0:
-                print("COL", self.board[row][col])
                 self.board[row][col] = player
-                print("onnistui")
-                return
+                return True
         print("ei tilaa tällä sarakkeella")
