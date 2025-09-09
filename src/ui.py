@@ -1,7 +1,9 @@
-from tkinter import *
+from tkinter import Canvas
+
 
 class UI:
     """käyttöliittymä"""
+
     def __init__(self, root, game):
         self.root = root
         self.game = game
@@ -9,16 +11,20 @@ class UI:
         self.cols = self.game.cols
         self.piece_size = 80
         self.current_player = 1
+        self.gameboard = False
 
     def start(self):
         """aloittaa käyttöliittymän piirtämällä pelilaudan pohjan
         """
-        self.gameboard = Canvas(self.root, bg="blue", height=self.rows*self.piece_size, width=self.cols*self.piece_size)
+        self.gameboard = Canvas(self.root,
+                                bg="blue",
+                                height=self.rows*self.piece_size,
+                                width=self.cols*self.piece_size)
         self.gameboard.pack()
 
         self.gameboard.bind("<Button-1>", self.handle_click)
         self.draw_board(self.game.board)
-              
+
     def draw_board(self, board):
         """piirtää pelilaudalle pelaajien nappulat oikean värisinä
 
@@ -26,7 +32,7 @@ class UI:
             board (lista): 6x7 matriisi, missä 0=tyhjä, 1=pelaaja, 2=tekoäly
         """
         self.gameboard.delete("all")
-        
+
         for row in range(self.rows):
             for col in range(self.cols):
                 x1 = col * self.piece_size
@@ -37,14 +43,14 @@ class UI:
                     color = "yellow"
                 else:
                     color = "white"
-                
+
                 self.gameboard.create_oval(x1 + 5,
-                                           y1 +5,
-                                           x1 + self.piece_size -5,
-                                           y1 + self.piece_size -5,
-                                           fill = color
+                                           y1 + 5,
+                                           x1 + self.piece_size - 5,
+                                           y1 + self.piece_size - 5,
+                                           fill=color
                                            )
-                
+
     def handle_click(self, event):
         """tutkii mitä saraketta klikattiin ja käsittelee hiiren klikkauksen
 
@@ -61,4 +67,3 @@ class UI:
                 self.current_player = 2
             else:
                 self.current_player = 1
-

@@ -3,7 +3,8 @@ class Connect4:
     def __init__(self):
         self.rows = 6
         self.cols = 7
-        self.board = [[0 for col in range(self.cols)] for row in range(self.rows)]
+        self.board = [[0 for col in range(self.cols)]
+                      for row in range(self.rows)]
         # print(self.board)
 
     def make_move(self, col, player):
@@ -20,3 +21,4 @@ class Connect4:
                 self.board[row][col] = player
                 return True
         print("ei tilaa tällä sarakkeella")
+        return False
