@@ -1,5 +1,6 @@
 from tkinter import Canvas
-
+from ai import AI
+from math import inf
 
 class UI:
     """käyttöliittymä"""
@@ -29,7 +30,8 @@ class UI:
         """piirtää pelilaudalle pelaajien nappulat oikean värisinä
 
         Args:
-            board (lista): 6x7 matriisi, missä 0=tyhjä, 1=pelaaja, 2=tekoäly
+            board (lista): 6x7 matriisi, missä 0=tyhjä=valkoinen,
+             1=pelaaja=punainen, 2=tekoäly=keltainen
         """
         self.gameboard.delete("all")
 
@@ -52,18 +54,42 @@ class UI:
                                            )
 
     def handle_click(self, event):
-        """tutkii mitä saraketta klikattiin ja käsittelee hiiren klikkauksen
+        """tutkii mitä saraketta klikattiin ja käsittelee hiiren klikkauksen,
+        jos pelaajan (1) vuoro
+        tekee siirron jos mahdollista
+        tutkii voittoa
+        siirtää vuoron tekoälylle
 
         Args:
             event (): olio klikkaukselle, sisältää esim koordinaatit
         """
-        print("klikkaus", event)
-        col = event.x // self.piece_size
-        print(col)
-        if self.game.make_move(col, self.current_player):
-            print("onnistui")
-            self.draw_board(self.game.board)
-            if self.current_player == 1:
+        if self.current_player == 1:
+            col = event.x // self.piece_size
+            print(col)
+            if self.game.make_move(col, self.current_player):
+                print("PLAYER move")
+                self.draw_board(self.game.board)
+
+                # tarkista pelaajan voittoa tässä
+
                 self.current_player = 2
-            else:
-                self.current_player = 1
+                self.ai_turn()
+
+    def ai_turn(self):
+        """tekoälyn vuoro pelissä,
+        tutkii minimaxilla mikä on paras liike ja suorittaa sen
+        tutkii mahdollisen voiton
+        siirtää vuoron pelaajalle
+        """
+
+        ai = AI()
+        col, value = ai.minimax(self.game.board, 3, -inf, inf, True)
+        print("col", col, "val", value)
+
+        if self.game.make_move(col, self.current_player):
+            print("AI move")
+            self.draw_board(self.game.board)
+
+            # tarkista ai voittoa
+
+            self.current_player = 1

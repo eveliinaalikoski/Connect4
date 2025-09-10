@@ -14,8 +14,11 @@ class Connect4:
         Args:
             col (int): sarakkeen numero 0-6
             player (int): pelaajan identifoiva numero 1=pelaaja ja 2=tekoäly
+
+        Returns:
+            boolean: palauttaa true jos liike onnistui, muuten false
         """
-        print("C", col, "PLA", player)
+        print("COL", col, "PLA", player)
         for row in range(self.rows-1, -1, -1):
             if self.board[row][col] == 0:
                 self.board[row][col] = player
