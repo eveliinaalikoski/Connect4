@@ -60,11 +60,7 @@ class AI:
                 beta = min(beta, value)
             return column, value
 
-
-
-# TO DO:
-
-    def is_terminal(self, board):
+    def is_terminal(self, board): # TO DO
         print("is_terminal", board)
         return False
 
