@@ -21,10 +21,12 @@ Lisävaatimuksina:
 
 Käyttöliittymä toteutetaan Tkinterillä, missä pelaaja klikkaa saraketta, mihin haluaa tiputtaa nappulansa.
 
-Alfa-beta karsinnalla minimax algoritmin aikavaatimus on hitaimmillaan O(b^d) ja nopeimmillaan O(sqrt(b^d)), missä d on haun syvyys ja b on haarautumisluku eli vaihtoehtojen määrä. Alfa-beta karsinta sekä lisävaatimuksissa luetellut optimoinnit lisäävät algoritmin tehokkuutta. Ilman niitä varsinkin alussa (kun ladalla on vähän nappuloita) laskentaan menisi paljon aikaa, eikä olisi niin mielekästä pelata tätä tekoälyä vastaan.
+Alfa-beta karsinnalla minimax algoritmin aikavaatimus on hitaimmillaan O(b^d) ja nopeimmillaan O(sqrt(b^d)), missä d on haun syvyys ja b on haarautumisluku eli vaihtoehtojen määrä. Alfa-beta karsinta sekä lisävaatimuksissa luetellut optimoinnit lisäävät algoritmin tehokkuutta. Ilman niitä varsinkin alussa (kun laudalla on vähän nappuloita) laskentaan menisi paljon aikaa, eikä olisi niin mielekästä pelata tätä tekoälyä vastaan.
 
 ## Lähteet
 
 [Wikipedia, Alpha-beta pruning](https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning)
 
 [Youtube, Minimax algorithm with Alpha-Beta pruning with Connect 4](https://www.youtube.com/watch?v=DV5d31z1xTI&list=WL&index=1&t=196s)
+
+[Minimax ja alfa-beta-karsinta, Jaakko Karhunen](https://jyx.jyu.fi/bitstreams/991dbfe7-5ba5-4c0e-9c8d-5ad4fc2022e7/download)
