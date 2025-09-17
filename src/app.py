@@ -22,6 +22,12 @@ class Connect4:
         for row in range(self.rows-1, -1, -1):
             if self.board[row][col] == 0:
                 self.board[row][col] = player
-                return True
+                return True, (row, col)
         print("ei tilaa tällä sarakkeella")
-        return False
+        return False, None
+
+    def full_board(self):
+        for col in range(self.cols):
+            if self.board[0][col] == 0:
+                return False
+        return True

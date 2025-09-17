@@ -13,6 +13,8 @@ class UI:
         self.piece_size = 80
         self.current_player = 1
         self.gameboard = False
+        self.game_over = False
+        self.ai = AI()
 
     def start(self):
         """aloittaa käyttöliittymän piirtämällä pelilaudan pohjan
@@ -63,14 +65,26 @@ class UI:
         Args:
             event (): olio klikkaukselle, sisältää esim koordinaatit
         """
+        if self.game_over:
+            return
+        
         if self.current_player == 1:
             col = event.x // self.piece_size
             print(col)
-            if self.game.make_move(col, self.current_player):
+            success, move = self.game.make_move(col, self.current_player)
+            if success:
                 print("PLAYER move")
                 self.draw_board(self.game.board)
+                self.root.update_idletasks()
+                if self.ai.winning_move(self.game.board, move[0], move[1]):
+                    self.game_over = True
+                    self.win(self.current_player)
+                    return
 
-                # tarkista pelaajan voittoa tässä
+                if self.game.full_board():
+                    self.game_over = True
+                    # TO DO: joku ilmotus
+                    return
 
                 self.current_player = 2
                 self.ai_turn()
@@ -82,14 +96,25 @@ class UI:
         siirtää vuoron pelaajalle
         """
 
-        ai = AI()
-        col, value = ai.minimax(self.game.board, 3, -inf, inf, True)
+        col, value = self.ai.minimax(self.game.board, 4, -inf, inf, True, None)
         print("col", col, "val", value)
 
-        if self.game.make_move(col, self.current_player):
+        success, move = self.game.make_move(col, self.current_player)
+        if success:
             print("AI move")
             self.draw_board(self.game.board)
 
-            # tarkista ai voittoa
+            if self.ai.winning_move(self.game.board, move[0], move[1]):
+                self.game_over = True
+                self.win(self.current_player)
+                return
 
+            if self.game.full_board():
+                self.game_over = True
+                # TO DO: joku ilmotus
+                return
             self.current_player = 1
+
+    def win(self, current_player):
+        print("PLAYER WON", current_player)
+        # TO DO: joku teksti / ilmoitus näytölle voitosta
