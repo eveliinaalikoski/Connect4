@@ -7,9 +7,8 @@ def main():
     window = Tk()
     window.title("Connect4")
 
-    game = Connect4()
-    ui = UI(window, game)
-    ui.start()
+    game = Connect4(window)
+    game.ui.start()
 
     window.mainloop()
 
