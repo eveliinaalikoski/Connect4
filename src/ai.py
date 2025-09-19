@@ -24,15 +24,22 @@ class AI:
             tuple (int, int): (parhaan liikkeen sarake, 
                 pelilaudan pistemäärä liikkeen jälkeen)
         """
-        terminal = self.is_terminal(board, depth, last_move)
-        if terminal is not False:
-            return None, terminal
-
         possible_moves = self.get_moves(board)
+        
+        if last_move:
+            row, column = last_move
+            if self.winning_move(board, row, column):
+                return (None, 100000) if board[row][column] == 2 else (None, -100000)
+        
+        if len(possible_moves) == 0:
+            return None, 0 # tasapeli
+
+        if depth == 0:
+            return None, self.heuristic_value(board)
 
         if maximizing_player:
             value = - inf
-            column = 0 # TO DO: alottaa keskeltä
+            column = 0
             for col in possible_moves:
                 child_board, (r, c) = self.simulate_move(board, col, maximizing_player)
                 new_value = self.minimax(child_board, depth - 1, alpha, beta, False, (r, c))
@@ -61,23 +68,6 @@ class AI:
                 beta = min(beta, value)
             return column, value
 
-    def is_terminal(self, board, depth, last_move): # TO DO
-        # print("is_terminal", board)
-        # tarkista oliko edellinen siirto voittosiirto, palauta true
-        # jos lauta täysi, palautetaan 0 tasapeli
-        if last_move:
-            row, column = last_move
-            if self.winning_move(board, row, column):
-                return 100000 if board[row][column] == 2 else -100000
-        
-        if len(self.get_moves(board)) == 0:
-            return 0 # tasapeli
-
-        if depth == 0:
-            return self.heuristic_value(board)
-    
-        return False
-    
     def winning_move(self, board, row, column):
         # print("winning_move", board, row, column)
         player = board[row][column]
@@ -190,7 +180,7 @@ class AI:
         """
         # print("get_moves", board)
         possible_moves = []
-        for col in range(self.cols):
+        for col in [3, 2, 4, 1, 5, 0, 6]:
             if board[0][col] == 0:
                 possible_moves.append(col)
         return possible_moves
