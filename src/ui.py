@@ -1,15 +1,18 @@
 from tkinter import Canvas
 
 class UI:
-    """käyttöliittymä"""
-
+    """käyttöliittymä Connect 4 pelille
+    sisältää pelilaudan piirtämisen tkinterillä
+    """
     def __init__(self, root, game):
         self.root = root
         self.game = game
         self.gameboard = False
 
     def start(self):
-        """aloittaa käyttöliittymän piirtämällä pelilaudan pohjan
+        """käynnistää käyttöliittymän
+        - piirtää sinisen taustan
+        - sitoo hiiren klikkauksen siitä vastaavaan funktioon
         """
         self.gameboard = Canvas(self.root,
                                 bg="blue",
@@ -24,8 +27,10 @@ class UI:
         """piirtää pelilaudalle pelaajien nappulat oikean värisinä
 
         Args:
-            board (lista): 6x7 matriisi, missä 0=tyhjä=valkoinen,
-             1=pelaaja=punainen, 2=tekoäly=keltainen
+            board (matrix): 6x7 pelilauta, missä 
+            0 = tyhjä = valkoinen,
+            1 = pelaaja = punainen,
+            5 = tekoäly = keltainen
         """
         self.gameboard.delete("all")
 
@@ -35,7 +40,7 @@ class UI:
                 y1 = row * self.game.piece_size
                 if board[row][col] == 1:
                     color = "red"
-                elif board[row][col] == 2:
+                elif board[row][col] == 5:
                     color = "yellow"
                 else:
                     color = "white"

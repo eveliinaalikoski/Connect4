@@ -2,6 +2,9 @@ from math import inf
 from copy import deepcopy
 
 class AI:
+    """luokka Connect 4 pelin tekoälylle, missä lasketaan paras mahdollinen siirto tekoälylle
+    laskentaan käyutetään minimax-algoritmia alfa-beta -karsinnalla
+    """
     def __init__(self):
         self.cols = 7
         self.rows = 6
@@ -29,7 +32,7 @@ class AI:
         if last_move:
             row, column = last_move
             if self.winning_move(board, row, column):
-                return (None, 100000) if board[row][column] == 2 else (None, -100000)
+                return (None, 100000) if board[row][column] == 5 else (None, -100000)
         
         if len(possible_moves) == 0:
             return None, 0 # tasapeli
@@ -69,7 +72,16 @@ class AI:
             return column, value
 
     def winning_move(self, board, row, column):
-        # print("winning_move", board, row, column)
+        """tarkistaa oliko viime siirto voittosiirto
+
+        Args:
+            board (matrix): 6x7 pelilauta
+            row (int): viimesiirron rivi
+            column (int): viimesiirron sarake
+
+        Returns:
+            boolean: palauttaa true, jos 4 samaa nappulaa peräkkäin, muuten false
+        """
         player = board[row][column]
         # directions = [vaaka, pysty, ylösviisto, alasviisto]
         directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
@@ -102,13 +114,18 @@ class AI:
         return False
 
     def heuristic_value(self, board):
-        score = 0
+        """laskee heuristisen arvon pelitilanteelle apulistan
+        sum_scores avulla, missä pistemäärä saadaan ikkunan summan indeksistä
 
-        # keskikolumni
-        center_column = [board[row][3] for row in range(self.rows)]
-        # print("center", center_column)
-        count = center_column.count(2)
-        score += count * 5
+        Args:
+            board (matrix): 6x7 pelilauta
+
+        Returns:
+            int: pelitilanteen pistemäärä, missä tekoälyn (5) pisteet ovat positiiviset, 
+            ja pelaajan (1) pisteet negatiiviset
+        """
+        sum_scores = [0, -10, -30, -50, 0, 10, 0, 0, 0, 0, 30, 0, 0, 0, 0, 50, 0]
+        score = 0
 
         # vaaka
         for row in range(self.rows):
@@ -117,8 +134,8 @@ class AI:
                           board[row][col + 1],
                           board[row][col + 2],
                           board[row][col + 3]]
-                score += self.score_window(window)
-            
+                score += sum_scores[sum(window)]
+
         # pysty
         for row in range(self.rows - 3):
             for col in range(self.cols):
@@ -126,7 +143,7 @@ class AI:
                           board[row + 1][col],
                           board[row + 2][col],
                           board[row + 3][col]]
-                score += self.score_window(window)
+                score += sum_scores[sum(window)]
 
         # yläviisto
         for row in range(3, self.rows):
@@ -135,8 +152,8 @@ class AI:
                           board[row - 1][col + 1],
                           board[row - 2][col + 2],
                           board[row - 3][col + 3]]
-                score += self.score_window(window)
-        
+                score += sum_scores[sum(window)]
+
         # alaviisto
         for row in range(self.rows - 3):
             for col in range(self.cols - 3):
@@ -144,33 +161,14 @@ class AI:
                           board[row + 1][col + 1],
                           board[row + 2][col + 2],
                           board[row + 3][col + 3]]
-                score += self.score_window(window)
-        # print("SCORE", score)
-        return score
-
-    def score_window(self, window):
-        # 0 = tyhjä, 1 = player, 2 = AI
-        score = 0
-
-        if window.count(2) == 4:
-            score += 100
-        elif window.count(2) == 3 and window.count(0) == 1:
-            score += 10
-        elif window.count(2) == 2 and window.count(0) == 2:
-            score += 5
-        
-        if window.count(1) == 4:
-            score -= 100
-        elif window.count(1) == 3 and window.count(0) == 1:
-            score -= 10
-        elif window.count(1) == 2 and window.count(0) == 2:
-            score -= 5
+                score += sum_scores[sum(window)]
 
         return score
-    
+
     def get_moves(self, board):
         """etsitään laudalta sarakkeet joihin voidaan tehdä siirto,
-        eli sarakkeet jotka ei ole täynnä
+        eli sarakkeet jotka ei ole täynnä,
+        etsitään keskisarakkeesta alkaen
 
         Args:
             board (matrix): pelilauta 6x7 matriisi
@@ -193,7 +191,7 @@ class AI:
             board (matrix): 6x7 pelilauta 
             col (int): sarake mihin pelinappula tiputetaan
             maximizing_player (boolean): arvo on true,
-            jos siirto on tekoälyn (merkataan 2), 
+            jos siirto on tekoälyn (merkataan 5), 
             muuten false (merkataan 1)
 
         Returns:
@@ -206,5 +204,5 @@ class AI:
                 break
         board_copy = deepcopy(board)
         # print(board_copy, "OG", board)
-        board_copy[r][col] = 2 if maximizing_player else 1
+        board_copy[r][col] = 5 if maximizing_player else 1
         return board_copy, (r, col)

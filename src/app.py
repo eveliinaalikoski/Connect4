@@ -1,8 +1,12 @@
 from ui import UI
 from ai import AI
 from math import inf
+import time
 
 class Connect4:
+    """luokka Connect 4 pelille
+    sisältää pelilogiikkaan liittyvät funktiot
+    """
     def __init__(self, root):
         self.root = root
         self.rows = 6
@@ -24,7 +28,9 @@ class Connect4:
             player (int): pelaajan identifoiva numero 1=pelaaja ja 5=tekoäly
 
         Returns:
-            boolean: palauttaa true jos liike onnistui, muuten false
+            tuple (boolean, (int, int)):
+            - jos tilaa annetulla sarakkeella: (true, (eka vapaa rivi, annettu kolumni))
+            - jos ei tilaa sarakkeella: (false, none)
         """
         print("COL", col, "PLA", player)
         for row in range(self.rows-1, -1, -1):
@@ -35,29 +41,30 @@ class Connect4:
         return False, None
 
     def full_board(self):
+        """tarkistaa onko pelilauta täysi
+
+        Returns:
+            boolean: true, jos lauta täynnä, muuten false
+        """
         for col in range(self.cols):
             if self.board[0][col] == 0:
                 return False
         return True
     
-    def win(self, current_player):
+    def win(self, current_player): # TO DO: joku teksti / ilmoitus näytölle voitosta
         print("PLAYER WON", current_player)
-        # TO DO: joku teksti / ilmoitus näytölle voitosta
 
     def handle_click(self, event):
-        """tutkii mitä saraketta klikattiin ja käsittelee hiiren klikkauksen,
-        jos pelaajan (1) vuoro
-        tekee siirron jos mahdollista
-        tutkii voittoa
-        siirtää vuoron tekoälylle
+        """käsittelee pelaajan hiiren klikkauksen
+        jos pelaajan (1) vuoro ja peli ei ole ohi:
+        - tekee siirron pelaajan klikkaamaan sarakkeeseen, jos mahdollista
+        - tutkii voittoa tai tasapeliä
+        - siirtää vuoron tekoälylle
 
         Args:
-            event (): olio klikkaukselle, sisältää esim koordinaatit
+            event: tkinter-olio klikkaukselle, sisältää esim koordinaatit
         """
-        if self.game_over:
-            return
-        
-        if self.current_player == 1:
+        if self.current_player == 1 and not self.game_over:
             col = event.x // self.piece_size
             print(col)
             success, move = self.make_move(col, self.current_player)
@@ -75,17 +82,20 @@ class Connect4:
                     # TO DO: joku ilmotus
                     return
 
-                self.current_player = 2
+                self.current_player = 5
                 self.ai_turn()
 
     def ai_turn(self):
-        """tekoälyn vuoro pelissä,
-        tutkii minimaxilla mikä on paras liike ja suorittaa sen
-        tutkii mahdollisen voiton
-        siirtää vuoron pelaajalle
+        """tekoälyn vuoro pelissä
+        - tutkii minimaxilla mikä on paras siirto --> tekee siirron
+        - tutkii voittoa tai tasapeliä
+        - siirtää vuoron pelaajalle
         """
+        # start = time.time()
+        col, value = self.ai.minimax(self.board, 6, -inf, inf, True, None)
+        # end = time.time()
+        # print("AIKA", end-start)
 
-        col, value = self.ai.minimax(self.board, 5, -inf, inf, True, None)
         print("col", col, "val", value)
 
         success, move = self.make_move(col, self.current_player)
