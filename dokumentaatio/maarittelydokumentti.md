@@ -19,6 +19,13 @@ Lisävaatimuksina:
 - Tarkistetaan joka vuoron jälkeen, muodostaako tämä siirto neljän suoran eli voiton
 - Mielekäs heuristiikkafunktio arvioimaan pelitilannetta (esimerkiksi tekoälyn kolmen suorista hyvät pisteet, kun taas vastustajan kolmen suorasta miinuspisteitä)
 
+Heuristiikkafunktion palauttamat arvot:
+
+- jos tekoälyllä / vastustajalla neljän rivi (voittotilanne) +100000 / -100000
+- jos tekoälyllä / vastustajalla rivissä 3 nappulaa ja yksi tyhjä +50 / -50
+- jos tekoälyllä / vastustajalla rivissä 2 nappulaa ja kaksi tyhjää +30 / -30
+- jos tekoälyllä / vastustajalla rivissä 1 nappula ja kolme tyhjää +10 / -10
+
 Käyttöliittymä toteutetaan Tkinterillä, missä pelaaja klikkaa saraketta, mihin haluaa tiputtaa nappulansa.
 
 Alfa-beta karsinnalla minimax algoritmin aikavaatimus on hitaimmillaan O(b^d) ja nopeimmillaan O(sqrt(b^d)), missä d on haun syvyys ja b on haarautumisluku eli vaihtoehtojen määrä. Alfa-beta karsinta sekä lisävaatimuksissa luetellut optimoinnit lisäävät algoritmin tehokkuutta. Ilman niitä varsinkin alussa (kun laudalla on vähän nappuloita) laskentaan menisi paljon aikaa, eikä olisi niin mielekästä pelata tätä tekoälyä vastaan.
