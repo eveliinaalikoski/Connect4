@@ -87,14 +87,28 @@ class Connect4:
 
     def ai_turn(self):
         """tekoälyn vuoro pelissä
+        - käytetään iteratiivista syvenemistä aikarajalla ja syvyydestä 3 alkaen
         - tutkii minimaxilla mikä on paras siirto --> tekee siirron
         - tutkii voittoa tai tasapeliä
         - siirtää vuoron pelaajalle
         """
-        # start = time.time()
-        col, value = self.ai.minimax(self.board, 6, -inf, inf, True, None)
+        start = time.time()
+        depth = 3
+        max_time = 2
+
+        while True:
+            if time.time() - start > max_time:
+                break
+            col, value = self.ai.minimax(self.board, depth, -inf, inf, True, None)
+
+            depth += 1
+
+        end = time.time()
+        print("TIME", end - start)
+
+        # col, value = self.ai.minimax(self.board, 8, -inf, inf, True, None)
         # end = time.time()
-        # print("AIKA", end-start)
+        # print("AIKA", end - start)
 
         print("col", col, "val", value)
 

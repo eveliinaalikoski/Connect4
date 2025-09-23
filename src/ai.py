@@ -8,6 +8,7 @@ class AI:
     def __init__(self):
         self.cols = 7
         self.rows = 6
+        self.keys = {}
 
     def minimax(self, board, depth, alpha, beta, maximizing_player, last_move):
         """minimax-algoritmi alfa-beta karsinnalla,
@@ -28,7 +29,7 @@ class AI:
                 pelilaudan pistemäärä liikkeen jälkeen)
         """
         possible_moves = self.get_moves(board)
-        
+
         if last_move:
             row, column = last_move
             if self.winning_move(board, row, column):
@@ -40,20 +41,28 @@ class AI:
         if depth == 0:
             return None, self.heuristic_value(board)
 
+        # tarkistetaan onko pelitilanne laskettu aiemmin
+        board_key = str(board)
+        if board_key in self.keys:
+            best_col = self.keys[board_key]
+            if best_col in possible_moves:
+                possible_moves.remove(best_col)
+                possible_moves.insert(0, best_col)
+
         if maximizing_player:
             value = - inf
             column = 0
             for col in possible_moves:
                 child_board, (r, c) = self.simulate_move(board, col, maximizing_player)
                 new_value = self.minimax(child_board, depth - 1, alpha, beta, False, (r, c))
-                # print("VALUES", new_value, value)
-
                 if new_value[1] > value:
                     value = new_value[1]
                     column = col
                 if value >= beta:
                     break
                 alpha = max(alpha, value)
+
+            self.keys[board_key] = column
             return column, value
 
         else:
@@ -62,13 +71,14 @@ class AI:
             for col in possible_moves:
                 child_board, (r, c) = self.simulate_move(board, col, maximizing_player)
                 new_value = self.minimax(child_board, depth - 1, alpha, beta, True, (r, c))
-                # print("VALUES", new_value, value)
                 if new_value[1] < value:
                     value = new_value[1]
                     column = col
                 if value <= alpha:
                     break
                 beta = min(beta, value)
+                
+            self.keys[board_key] = column
             return column, value
 
     def winning_move(self, board, row, column):
