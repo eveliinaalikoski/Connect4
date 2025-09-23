@@ -1,10 +1,12 @@
 from math import inf
 from copy import deepcopy
 
+
 class AI:
     """luokka Connect 4 pelin tekoälylle, missä lasketaan paras mahdollinen siirto tekoälylle
     laskentaan käyutetään minimax-algoritmia alfa-beta -karsinnalla
     """
+
     def __init__(self):
         self.cols = 7
         self.rows = 6
@@ -31,12 +33,11 @@ class AI:
         possible_moves = self.get_moves(board)
 
         if last_move:
-            row, column = last_move
-            if self.winning_move(board, row, column):
-                return (None, 100000) if board[row][column] == 5 else (None, -100000)
-        
+            if self.winning_move(board, last_move[0], last_move[1]):
+                return (None, 100000) if board[last_move[0]][last_move[1]] == 5 else (None, -100000)
+
         if len(possible_moves) == 0:
-            return None, 0 # tasapeli
+            return None, 0  # tasapeli
 
         if depth == 0:
             return None, self.heuristic_value(board)
@@ -44,17 +45,17 @@ class AI:
         # tarkistetaan onko pelitilanne laskettu aiemmin
         board_key = str(board)
         if board_key in self.keys:
-            best_col = self.keys[board_key]
-            if best_col in possible_moves:
-                possible_moves.remove(best_col)
-                possible_moves.insert(0, best_col)
+            possible_moves.remove(self.keys[board_key])
+            possible_moves.insert(0, self.keys[board_key])
 
         if maximizing_player:
             value = - inf
             column = 0
             for col in possible_moves:
-                child_board, (r, c) = self.simulate_move(board, col, maximizing_player)
-                new_value = self.minimax(child_board, depth - 1, alpha, beta, False, (r, c))
+                child_board, (r, c) = self.simulate_move(
+                    board, col, maximizing_player)
+                new_value = self.minimax(
+                    child_board, depth - 1, alpha, beta, False, (r, c))
                 if new_value[1] > value:
                     value = new_value[1]
                     column = col
@@ -65,21 +66,22 @@ class AI:
             self.keys[board_key] = column
             return column, value
 
-        else:
-            value = inf
-            column = 0
-            for col in possible_moves:
-                child_board, (r, c) = self.simulate_move(board, col, maximizing_player)
-                new_value = self.minimax(child_board, depth - 1, alpha, beta, True, (r, c))
-                if new_value[1] < value:
-                    value = new_value[1]
-                    column = col
-                if value <= alpha:
-                    break
-                beta = min(beta, value)
-                
-            self.keys[board_key] = column
-            return column, value
+        value = inf
+        column = 0
+        for col in possible_moves:
+            child_board, (r, c) = self.simulate_move(
+                board, col, maximizing_player)
+            new_value = self.minimax(
+                child_board, depth - 1, alpha, beta, True, (r, c))
+            if new_value[1] < value:
+                value = new_value[1]
+                column = col
+            if value <= alpha:
+                break
+            beta = min(beta, value)
+
+        self.keys[board_key] = column
+        return column, value
 
     def winning_move(self, board, row, column):
         """tarkistaa oliko viime siirto voittosiirto
@@ -97,7 +99,7 @@ class AI:
         directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
         for drow, dcol in directions:
             count = 1
-            
+
             # positiiviseen suuntaan
             r = row + drow
             c = column + dcol
@@ -134,7 +136,8 @@ class AI:
             int: pelitilanteen pistemäärä, missä tekoälyn (5) pisteet ovat positiiviset, 
             ja pelaajan (1) pisteet negatiiviset
         """
-        sum_scores = [0, -10, -30, -50, 0, 10, 0, 0, 0, 0, 30, 0, 0, 0, 0, 50, 0]
+        sum_scores = [0, -10, -30, -50, 0, 10,
+                      0, 0, 0, 0, 30, 0, 0, 0, 0, 50, 0]
         score = 0
 
         # vaaka

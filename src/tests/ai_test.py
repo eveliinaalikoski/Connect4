@@ -3,13 +3,14 @@ from ai import AI
 from app import Connect4
 from math import inf
 
+
 class TestAI(unittest.TestCase):
     def setUp(self):
         self.ai = AI()
         self.game = Connect4(root=None)
 
         self.empty_board = [[0 for col in range(self.ai.cols)]
-                       for row in range(self.ai.rows)]
+                            for row in range(self.ai.rows)]
 
     def test_winning_move_with_no_win(self):
         gameboard = self.empty_board
@@ -49,7 +50,7 @@ class TestAI(unittest.TestCase):
     def test_heuristic_value_with_one_move(self):
         gameboard = self.empty_board
         gameboard[5][3] = 1
-        
+
         score = self.ai.heuristic_value(gameboard)
 
         self.assertEqual(score, -70)
@@ -67,7 +68,7 @@ class TestAI(unittest.TestCase):
         gameboard[5][2] = 5
         gameboard[4][3] = 1
         gameboard[3][3] = 5
-    
+
         possible_moves = self.ai.get_moves(gameboard)
 
         correct_moves = [3, 2, 4, 1, 5, 0, 6]
@@ -76,8 +77,8 @@ class TestAI(unittest.TestCase):
 
     def test_get_moves_with_full_board(self):
         gameboard = [[1 for col in range(self.ai.cols)]
-                      for row in range(self.ai.rows)]
-    
+                     for row in range(self.ai.rows)]
+
         possible_moves = self.ai.get_moves(gameboard)
 
         correct_moves = []
@@ -106,12 +107,13 @@ class TestAI(unittest.TestCase):
                            [1, 5, 5, 5, 0, 0, 0],
                            [1, 1, 1, 5, 0, 0, 0],
                            [5, 1, 1, 1, 5, 0, 0]]
-        
+
         last_move = None
         current_player = 5
         for __ in range(5):
             maximizing_player = True if current_player == 5 else False
-            col, value = self.ai.minimax(self.game.board, 5, -inf, inf, maximizing_player, last_move)
+            col, value = self.ai.minimax(
+                self.game.board, 5, -inf, inf, maximizing_player, last_move)
             self.assertEqual(value, 100000)
             success, last_move = self.game.make_move(col, current_player)
             self.assertEqual(success, True)
@@ -120,7 +122,7 @@ class TestAI(unittest.TestCase):
 
         win = self.ai.winning_move(self.game.board, last_move[0], last_move[1])
         self.assertEqual(win, True)
-    
+
     def test_minimax_with_a_draw(self):
         self.game.board = [[5, 1, 1, 1, 0, 1, 5],
                            [5, 1, 5, 1, 5, 1, 5],
@@ -128,5 +130,5 @@ class TestAI(unittest.TestCase):
                            [1, 5, 1, 5, 1, 5, 1],
                            [5, 1, 5, 1, 5, 1, 5],
                            [5, 1, 5, 1, 5, 1, 5]]
-        __, value = self.ai.minimax(self.game.board, 2, -inf, inf, True, None)
+        __, value = self.ai.minimax(self.game.board, 1, -inf, inf, True, None)
         self.assertEqual(value, 0)

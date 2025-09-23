@@ -1,9 +1,11 @@
 from tkinter import Canvas
 
+
 class UI:
     """käyttöliittymä Connect 4 pelille
     sisältää pelilaudan piirtämisen tkinterillä
     """
+
     def __init__(self, root, game):
         self.root = root
         self.game = game

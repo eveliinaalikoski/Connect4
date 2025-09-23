@@ -1,5 +1,4 @@
 from tkinter import Tk
-from ui import UI
 from app import Connect4
 
 

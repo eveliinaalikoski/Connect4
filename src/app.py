@@ -1,12 +1,14 @@
-from ui import UI
-from ai import AI
 from math import inf
 import time
+from ui import UI
+from ai import AI
+
 
 class Connect4:
     """luokka Connect 4 pelille
     sisältää pelilogiikkaan liittyvät funktiot
     """
+
     def __init__(self, root):
         self.root = root
         self.rows = 6
@@ -50,8 +52,8 @@ class Connect4:
             if self.board[0][col] == 0:
                 return False
         return True
-    
-    def win(self, current_player): # TO DO: joku teksti / ilmoitus näytölle voitosta
+
+    def win(self, current_player):  # TO DO: joku teksti / ilmoitus näytölle voitosta
         print("PLAYER WON", current_player)
 
     def handle_click(self, event):
@@ -99,17 +101,13 @@ class Connect4:
         while True:
             if time.time() - start > max_time:
                 break
-            col, value = self.ai.minimax(self.board, depth, -inf, inf, True, None)
+            col, value = self.ai.minimax(
+                self.board, depth, -inf, inf, True, None)
 
             depth += 1
 
         end = time.time()
         print("TIME", end - start)
-
-        # col, value = self.ai.minimax(self.board, 8, -inf, inf, True, None)
-        # end = time.time()
-        # print("AIKA", end - start)
-
         print("col", col, "val", value)
 
         success, move = self.make_move(col, self.current_player)
