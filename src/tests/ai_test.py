@@ -1,9 +1,12 @@
 import unittest
 from ai import AI
+from app import Connect4
+from math import inf
 
 class TestAI(unittest.TestCase):
     def setUp(self):
         self.ai = AI()
+        self.game = Connect4(root=None)
 
         self.empty_board = [[0 for col in range(self.ai.cols)]
                        for row in range(self.ai.rows)]
@@ -95,6 +98,35 @@ class TestAI(unittest.TestCase):
 
         self.assertEqual(new_board, (correct_board, (4, 2)))
 
+    def test_minimax_with_a_win_in_exactly_five_moves(self):
+        # valitaan pelitilanne, mistä löytyy varma voitto 5 siirrolla
+        self.game.board = [[0, 0, 0, 0, 0, 0, 0],
+                           [0, 5, 0, 5, 0, 0, 0],
+                           [0, 1, 0, 1, 0, 0, 0],
+                           [1, 5, 5, 5, 0, 0, 0],
+                           [1, 1, 1, 5, 0, 0, 0],
+                           [5, 1, 1, 1, 5, 0, 0]]
+        
+        last_move = None
+        current_player = 5
+        for __ in range(5):
+            maximizing_player = True if current_player == 5 else False
+            col, value = self.ai.minimax(self.game.board, 5, -inf, inf, maximizing_player, last_move)
+            self.assertEqual(value, 100000)
+            success, last_move = self.game.make_move(col, current_player)
+            self.assertEqual(success, True)
 
-## TO DO johonkin valmiiksi empty board, partially filled board 
-# ja full board, nii ei tarvi tehä aina testin alussa
+            current_player = 1 if current_player == 5 else 5
+
+        win = self.ai.winning_move(self.game.board, last_move[0], last_move[1])
+        self.assertEqual(win, True)
+    
+    def test_minimax_with_a_draw(self):
+        self.game.board = [[5, 1, 1, 1, 0, 1, 5],
+                           [5, 1, 5, 1, 5, 1, 5],
+                           [1, 5, 1, 5, 1, 5, 1],
+                           [1, 5, 1, 5, 1, 5, 1],
+                           [5, 1, 5, 1, 5, 1, 5],
+                           [5, 1, 5, 1, 5, 1, 5]]
+        __, value = self.ai.minimax(self.game.board, 2, -inf, inf, True, None)
+        self.assertEqual(value, 0)
