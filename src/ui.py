@@ -1,4 +1,4 @@
-from tkinter import Canvas
+from tkinter import Frame, Canvas, Label
 
 
 class UI:
@@ -7,16 +7,18 @@ class UI:
     """
 
     def __init__(self, root, game):
-        self.root = root
         self.game = game
         self.gameboard = False
+
+        self.frame = Frame(root, bg="blue")
+        self.frame.pack(fill="both", expand=True)
 
     def start(self):
         """käynnistää käyttöliittymän
         - piirtää sinisen taustan
         - sitoo hiiren klikkauksen siitä vastaavaan funktioon
         """
-        self.gameboard = Canvas(self.root,
+        self.gameboard = Canvas(self.frame,
                                 bg="blue",
                                 height=self.game.rows*self.game.piece_size,
                                 width=self.game.cols*self.game.piece_size)
@@ -53,3 +55,12 @@ class UI:
                                            y1 + self.game.piece_size - 5,
                                            fill=color
                                            )
+
+    def draw_text_box(self, text):
+        label = Label(self.frame,
+                      text=text,
+                      fg="white",
+                      bg="blue",
+                      font=("Arial", 25, "bold")
+                      )
+        label.pack(pady=20)

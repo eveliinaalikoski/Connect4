@@ -34,12 +34,11 @@ class Connect4:
             - jos tilaa annetulla sarakkeella: (true, (eka vapaa rivi, annettu kolumni))
             - jos ei tilaa sarakkeella: (false, none)
         """
-        print("COL", col, "PLA", player)
+        # print("COL", col, "PLA", player)
         for row in range(self.rows-1, -1, -1):
             if self.board[row][col] == 0:
                 self.board[row][col] = player
                 return True, (row, col)
-        print("ei tilaa tällä sarakkeella")
         return False, None
 
     def full_board(self):
@@ -53,9 +52,6 @@ class Connect4:
                 return False
         return True
 
-    def win(self, current_player):  # TO DO: joku teksti / ilmoitus näytölle voitosta
-        print("PLAYER WON", current_player)
-
     def handle_click(self, event):
         """käsittelee pelaajan hiiren klikkauksen
         jos pelaajan (1) vuoro ja peli ei ole ohi:
@@ -68,20 +64,19 @@ class Connect4:
         """
         if self.current_player == 1 and not self.game_over:
             col = event.x // self.piece_size
-            print(col)
             success, move = self.make_move(col, self.current_player)
             if success:
-                print("PLAYER move")
+                # print("PLAYER move")
                 self.ui.draw_board(self.board)
                 self.root.update_idletasks()
                 if self.ai.winning_move(self.board, move[0], move[1]):
                     self.game_over = True
-                    self.win(self.current_player)
+                    self.ui.draw_text_box("You win!")
                     return
 
                 if self.full_board():
                     self.game_over = True
-                    # TO DO: joku ilmotus
+                    self.ui.draw_text_box("No more moves!")
                     return
 
                 self.current_player = 5
@@ -101,27 +96,27 @@ class Connect4:
         while True:
             if time.time() - start > max_time:
                 break
-            col, value = self.ai.minimax(
+            col, _ = self.ai.minimax(
                 self.board, depth, -inf, inf, True, None)
 
             depth += 1
 
-        end = time.time()
-        print("TIME", end - start)
-        print("col", col, "val", value)
+        # end = time.time()
+        # print("TIME", end - start)
+        # print("col", col, "val", value)
 
         success, move = self.make_move(col, self.current_player)
         if success:
-            print("AI move")
+            # print("AI move")
             self.ui.draw_board(self.board)
 
             if self.ai.winning_move(self.board, move[0], move[1]):
                 self.game_over = True
-                self.win(self.current_player)
+                self.ui.draw_text_box("AI wins!")
                 return
 
             if self.full_board():
                 self.game_over = True
-                # TO DO: joku ilmotus
+                self.ui.draw_text_box("No more moves!")
                 return
             self.current_player = 1
