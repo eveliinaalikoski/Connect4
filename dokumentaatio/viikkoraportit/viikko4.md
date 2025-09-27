@@ -9,6 +9,7 @@ Mitä olen tehnyt tällä viikolla?
   - aloitetaan syvyydestä 3 ja määritetään aikarajaksi 2s
   - minimaxissa talletetaan avaimeksi str(board) ja arvoksi minimaxin parhaan arvon kolumni
   - myöhemmällä kierroksella katsotaan ollaanko oltu kyseisessä tilanteessa aikasemmin --> jos ollaan niin järjestetään possible_moves siten että avaimen arvona oleva kolumni käydään läpi ensimmäisenä (alfa-beta-karsinta tehostuu)
+- tein tkinterin Labelilla ilmoitukset voitosta/häviöstä/tasapelistä
 - siistin koodia pylintin ja autopep8 avulla
 - tutkin eri tekniikoita testaukseen yksikkötestien lisäksi
 
@@ -16,6 +17,7 @@ Miten ohjelma on edistynyt?
 
 - käyttää iteratiivista syvenemistä --> tekoälyn vuorossa kestää yleensä 2-10s
 - lisää testausta & testausdokumentti päivitetty
+- peli-ikkunan alareunaan tulee ilmoitus voitosta / häviöstä / tasapelistä
 
 Mitä opin tällä viikolla?
 
