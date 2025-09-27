@@ -4,7 +4,8 @@ from copy import deepcopy
 
 class AI:
     """luokka Connect 4 pelin tekoälylle, missä lasketaan paras mahdollinen siirto tekoälylle
-    laskentaan käyutetään minimax-algoritmia alfa-beta -karsinnalla
+    laskentaan käytetään minimax-algoritmia alfa-beta -karsinnalla
+     ja iteratiivisella syvenemisellä
     """
 
     def __init__(self):
@@ -14,7 +15,11 @@ class AI:
 
     def minimax(self, board, depth, alpha, beta, maximizing_player, last_move):
         """minimax-algoritmi alfa-beta karsinnalla,
-        arvioi parasta siirtoa maksivoivan pelaajan (tekoälyn) kannalta
+        arvioi parasta siirtoa maksivoivan pelaajan (tekoälyn) kannalta,
+
+        tutkii, onko pelitilanteessa oltu aikaisemmin ennen kuin aloittaa
+        laskennan --> jos ollaan oltu, aloitetaan laskenta sen 
+        pelitilanteen parhaimmasta sarakkeesta
 
         Args:
             board (matrix): 6x7 pelilauta
@@ -25,10 +30,11 @@ class AI:
                 aluksi ääretön
             maximizing_player (boolean): true jos tekoälyn (maksimoiva) vuoro,
                 false jos pelaajan (minimoiva) vuoro
+            last_move (tuple): viimeisin siirto muodossa (row, column)
 
         Returns:
-            tuple (int, int): (parhaan liikkeen sarake, 
-                pelilaudan pistemäärä liikkeen jälkeen)
+            tuple (int, int): (col = parhaan liikkeen sarake, 
+                value = pelilaudan pistemäärä liikkeen jälkeen)
         """
         possible_moves = self.get_moves(board)
 
@@ -127,14 +133,15 @@ class AI:
 
     def heuristic_value(self, board):
         """laskee heuristisen arvon pelitilanteelle apulistan
-        sum_scores avulla, missä pistemäärä saadaan ikkunan summan indeksistä
+        sum_scores avulla, missä pistemäärä saadaan ikkunan summan indeksistä,
+
+        tekoälyn (5) suorista saa positiivisia pisteitä ja pelaajan (1) negatiivisia
 
         Args:
             board (matrix): 6x7 pelilauta
 
         Returns:
-            int: pelitilanteen pistemäärä, missä tekoälyn (5) pisteet ovat positiiviset, 
-            ja pelaajan (1) pisteet negatiiviset
+            int: pelitilanteen pistemäärä
         """
         sum_scores = [0, -10, -30, -50, 0, 10,
                       0, 0, 0, 0, 30, 0, 0, 0, 0, 50, 0]
@@ -189,7 +196,6 @@ class AI:
         Returns:
             list: lista sarakkeista mihin pelinappulan voi tiputtaa
         """
-        # print("get_moves", board)
         possible_moves = []
         for col in [3, 2, 4, 1, 5, 0, 6]:
             if board[0][col] == 0:
@@ -204,18 +210,16 @@ class AI:
             board (matrix): 6x7 pelilauta 
             col (int): sarake mihin pelinappula tiputetaan
             maximizing_player (boolean): arvo on true,
-            jos siirto on tekoälyn (merkataan 5), 
-            muuten false (merkataan 1)
+                jos siirto on tekoälyn (merkataan 5), 
+                muuten false (merkataan 1)
 
         Returns:
             matrix: kopio pelilaudasta missä on simuloitu siirto
         """
-        # print("simulate_move")
         for row in range(self.rows-1, -1, -1):
             if board[row][col] == 0:
                 r = row
                 break
         board_copy = deepcopy(board)
-        # print(board_copy, "OG", board)
         board_copy[r][col] = 5 if maximizing_player else 1
         return board_copy, (r, col)

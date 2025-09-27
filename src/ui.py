@@ -26,6 +26,7 @@ class UI:
 
         self.gameboard.bind("<Button-1>", self.game.handle_click)
         self.draw_board(self.game.board)
+        print("Make your move")
 
     def draw_board(self, board):
         """piirtää pelilaudalle pelaajien nappulat oikean värisinä

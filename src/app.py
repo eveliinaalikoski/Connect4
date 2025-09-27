@@ -34,7 +34,6 @@ class Connect4:
             - jos tilaa annetulla sarakkeella: (true, (eka vapaa rivi, annettu kolumni))
             - jos ei tilaa sarakkeella: (false, none)
         """
-        # print("COL", col, "PLA", player)
         for row in range(self.rows-1, -1, -1):
             if self.board[row][col] == 0:
                 self.board[row][col] = player
@@ -66,7 +65,6 @@ class Connect4:
             col = event.x // self.piece_size
             success, move = self.make_move(col, self.current_player)
             if success:
-                # print("PLAYER move")
                 self.ui.draw_board(self.board)
                 self.root.update_idletasks()
                 if self.ai.winning_move(self.board, move[0], move[1]):
@@ -89,6 +87,7 @@ class Connect4:
         - tutkii voittoa tai tasapeliä
         - siirtää vuoron pelaajalle
         """
+        print("AI calculating...")
         start = time.time()
         depth = 3
         max_time = 2
@@ -103,11 +102,9 @@ class Connect4:
 
         # end = time.time()
         # print("TIME", end - start)
-        # print("col", col, "val", value)
 
         success, move = self.make_move(col, self.current_player)
         if success:
-            # print("AI move")
             self.ui.draw_board(self.board)
 
             if self.ai.winning_move(self.board, move[0], move[1]):
@@ -120,3 +117,4 @@ class Connect4:
                 self.ui.draw_text_box("No more moves!")
                 return
             self.current_player = 1
+            print("Make your move")
