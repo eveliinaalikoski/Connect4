@@ -15,6 +15,8 @@ Projektityö kurssille TKT20010 Aineopintojen harjoitustyö: Algoritmit ja teko�
 
 [Testausdokumentti](https://github.com/eveliinaalikoski/Connect4/blob/main/dokumentaatio/testausdokumentti.md)
 
+[Toteutusdokumentti](https://github.com/eveliinaalikoski/Connect4/blob/main/dokumentaatio/toteutusdokumentti.md)
+
 ## [Asennus ja käynnistys](https://github.com/eveliinaalikoski/Connect4/blob/main/dokumentaatio/kayttoohje.md)
 
 Kloonaa repositorio omalle koneellesi, siirry projektin juurihakemistoon, ja lataa projektin riippuvuudet:
