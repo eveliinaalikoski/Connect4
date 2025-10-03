@@ -10,8 +10,17 @@ class UI:
         self.game = game
         self.gameboard = False
 
-        self.frame = Frame(root, bg="blue")
+        self.frame = Frame(root, bg="lightblue")
         self.frame.pack(fill="both", expand=True)
+
+        self.topframe = Frame(self.frame, bg="lightblue")
+        self.topframe.pack()
+        self.toplabel = Label(self.topframe,
+                              text="",
+                              fg="blue",
+                              bg="lightblue",
+                              font=("Arial", 15, "bold"))
+        self.toplabel.pack(padx=20, pady=20)
 
     def start(self):
         """käynnistää käyttöliittymän
@@ -22,11 +31,11 @@ class UI:
                                 bg="blue",
                                 height=self.game.rows*self.game.piece_size,
                                 width=self.game.cols*self.game.piece_size)
-        self.gameboard.pack()
+        self.gameboard.pack(padx=20, pady=20)
 
         self.gameboard.bind("<Button-1>", self.game.handle_click)
         self.draw_board(self.game.board)
-        print("Make your move")
+        print("Start the game")
 
     def draw_board(self, board):
         """piirtää pelilaudalle pelaajien nappulat oikean värisinä
@@ -57,11 +66,5 @@ class UI:
                                            fill=color
                                            )
 
-    def draw_text_box(self, text):
-        label = Label(self.frame,
-                      text=text,
-                      fg="white",
-                      bg="blue",
-                      font=("Arial", 25, "bold")
-                      )
-        label.pack(pady=20)
+    def update_topbar(self, text):
+        self.toplabel.config(text=text)

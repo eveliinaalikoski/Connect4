@@ -69,12 +69,13 @@ class Connect4:
                 self.root.update_idletasks()
                 if self.ai.winning_move(self.board, move[0], move[1]):
                     self.game_over = True
-                    self.ui.draw_text_box("You win!")
+                    self.ui.update_topbar("You win!")
+                    print("YOU WIN")
                     return
 
                 if self.full_board():
                     self.game_over = True
-                    self.ui.draw_text_box("No more moves!")
+                    self.ui.update_topbar("No more moves!")
                     return
 
                 self.current_player = 5
@@ -109,12 +110,13 @@ class Connect4:
 
             if self.ai.winning_move(self.board, move[0], move[1]):
                 self.game_over = True
-                self.ui.draw_text_box("AI wins!")
+                self.ui.update_topbar("AI wins!")
+                print("AI WINS")
                 return
 
             if self.full_board():
                 self.game_over = True
-                self.ui.draw_text_box("No more moves!")
+                self.ui.update_topbar("No more moves!")
                 return
             self.current_player = 1
             print("Make your move")
