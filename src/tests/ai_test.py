@@ -54,6 +54,18 @@ class TestAI(unittest.TestCase):
         score = self.ai.heuristic_value(gameboard)
 
         self.assertEqual(score, -70)
+    
+    def test_heuristic_value_with_partially_filled_board(self):
+        gameboard = [[0, 0, 0, 0, 0, 0, 0],
+                     [0, 0, 0, 5, 0, 0, 0],
+                     [0, 0, 0, 5, 5, 0, 0],
+                     [0, 0, 0, 1, 5, 0, 0],
+                     [0, 0, 1, 5, 1, 1, 0],
+                     [0, 0, 1, 1, 5, 1, 5]]
+        
+        score = self.ai.heuristic_value(gameboard)
+
+        self.assertEqual(score, 120)
 
     def test_get_moves_with_empty_board(self):
         possible_moves = self.ai.get_moves(self.empty_board)
