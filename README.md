@@ -8,6 +8,7 @@ Projektityö kurssille TKT20010 Aineopintojen harjoitustyö: Algoritmit ja teko�
 - [Viikko 2](https://github.com/eveliinaalikoski/Connect4/blob/main/dokumentaatio/viikkoraportit/viikko2.md)
 - [Viikko 3](https://github.com/eveliinaalikoski/Connect4/blob/main/dokumentaatio/viikkoraportit/viikko3.md)
 - [Viikko 4](https://github.com/eveliinaalikoski/Connect4/blob/main/dokumentaatio/viikkoraportit/viikko4.md)
+- [Viikko 5](https://github.com/eveliinaalikoski/Connect4/blob/main/dokumentaatio/viikkoraportit/viikko5.md)
 
 ## Dokumentaatio
 
