@@ -12,7 +12,7 @@ Mitä olen tehnyt tällä viikolla?
 Miten ohjelma on edistynyt?
 
 - voitosta tulee ilmoitus yläpalkkiin ja myös konsoliin (konsoliin printataan aina myös kenen vuoro on)
-- uusi testi heuristiikkafunktiolle45
+- uusi testi heuristiikkafunktiolle
 
 Mitä opin tällä viikolla?
 
