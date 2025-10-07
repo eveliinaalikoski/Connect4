@@ -96,14 +96,18 @@ class Connect4:
         while True:
             if time.time() - start > max_time:
                 break
-            col, _ = self.ai.minimax(
+
+            col, value = self.ai.minimax(
                 self.board, depth, -inf, inf, True, None)
+
+            if value == 100000 or value == -100000:
+                break
 
             depth += 1
 
-        # end = time.time()
-        # print("TIME", end - start)
-
+        end = time.time()
+        print(f"Ai calculated to depth {depth} in {end-start:.2f} s")
+                
         success, move = self.make_move(col, self.current_player)
         if success:
             self.ui.draw_board(self.board)
