@@ -19,31 +19,51 @@ class TestAI(unittest.TestCase):
 
         self.assertEqual(result, False)
 
-    def test_winning_move_horizontal_win(self):
-        gameboard = self.empty_board
-        gameboard[5][2] = 1
-        gameboard[4][2] = 5
-        gameboard[5][3] = 1
-        gameboard[5][1] = 5
-        gameboard[5][4] = 1
-        gameboard[4][3] = 5
-        gameboard[5][5] = 1
+    def test_winning_move_with_horizontal_win(self):
+        gameboard = [[0, 0, 0, 0, 0, 0, 0],
+                     [0, 0, 0, 0, 0, 0, 0],
+                     [0, 0, 0, 0, 0, 0, 0],
+                     [0, 0, 0, 0, 0, 0, 0],
+                     [0, 0, 5, 5, 0, 0, 0],
+                     [0, 5, 1, 1, 1, 1, 0]]
 
-        result = self.ai.winning_move(gameboard, 5, 6)
+        result = self.ai.winning_move(gameboard, 5, 5)
 
         self.assertEqual(result, True)
 
-    def test_winning_move_vertical_win(self):
-        gameboard = self.empty_board
-        gameboard[5][0] = 1
-        gameboard[5][3] = 5
-        gameboard[4][0] = 1
-        gameboard[5][2] = 5
-        gameboard[3][0] = 1
-        gameboard[5][3] = 5
-        gameboard[2][0] = 1
+    def test_winning_move_with_vertical_win(self):
+        gameboard = [[0, 0, 0, 0, 0, 0, 0],
+                     [0, 0, 0, 0, 0, 0, 0],
+                     [1, 0, 0, 0, 0, 0, 0],
+                     [1, 0, 0, 0, 0, 0, 0],
+                     [1, 0, 0, 5, 0, 0, 0],
+                     [1, 0, 5, 5, 0, 0, 0]]
 
         result = self.ai.winning_move(gameboard, 2, 0)
+
+        self.assertEqual(result, True)
+
+    def test_winning_move_with_up_diagonal_win(self):
+        gameboard = [[0, 0, 0, 0, 0, 0, 0],
+                     [0, 0, 0, 0, 0, 0, 0],
+                     [0, 0, 0, 0, 0, 5, 0],
+                     [0, 0, 0, 0, 5, 1, 0],
+                     [0, 0, 0, 5, 1, 1, 0],
+                     [0, 0, 5, 5, 1, 1, 0]]
+
+        result = self.ai.winning_move(gameboard, 2, 5)
+
+        self.assertEqual(result, True)
+
+    def test_winning_move_with_down_diagonal_win(self):
+        gameboard = [[0, 0, 0, 0, 0, 0, 0],
+                     [0, 0, 0, 0, 0, 0, 0],
+                     [0, 0, 1, 0, 0, 0, 0],
+                     [0, 0, 5, 1, 0, 0, 0],
+                     [0, 0, 5, 5, 1, 0, 0],
+                     [0, 5, 1, 1, 5, 1, 0]]
+
+        result = self.ai.winning_move(gameboard, 2, 2)
 
         self.assertEqual(result, True)
 
@@ -51,21 +71,62 @@ class TestAI(unittest.TestCase):
         gameboard = self.empty_board
         gameboard[5][3] = 1
 
+        summa = -10-10-10-10-10-10-10
+
         score = self.ai.heuristic_value(gameboard)
 
-        self.assertEqual(score, -70)
+        self.assertEqual(score, summa)
     
-    def test_heuristic_value_with_partially_filled_board(self):
+    def test_heuristic_value_with_partially_filled_board_pt1(self):
         gameboard = [[0, 0, 0, 0, 0, 0, 0],
                      [0, 0, 0, 5, 0, 0, 0],
                      [0, 0, 0, 5, 5, 0, 0],
                      [0, 0, 0, 1, 5, 0, 0],
                      [0, 0, 1, 5, 1, 1, 0],
                      [0, 0, 1, 1, 5, 1, 5]]
-        
+                
+        summa = 10+10+10+10+10+30+30+30-10-30 # vaaka
+        summa += -30-10+30-30-10+10 # pysty
+        summa += 10+10+10+10+10+30-30 # yläviisto
+        summa += 30+30+30-50-30-10+30+10-30 # alaviisto
+
         score = self.ai.heuristic_value(gameboard)
 
-        self.assertEqual(score, 120)
+        self.assertEqual(score, summa)
+    
+    def test_heuristic_value_with_partially_filled_board_pt2(self):
+        gameboard = [[0, 0, 0, 0, 0, 0, 0],
+                     [0, 0, 1, 0, 0, 0, 0],
+                     [0, 0, 5, 0, 1, 0, 0],
+                     [0, 0, 1, 0, 5, 0, 0],
+                     [0, 0, 1, 0, 5, 0, 0],
+                     [0, 1, 5, 1, 5, 0, 5]]
+        
+        summa = -10-10-10+10-10-10+10-10+10 # vaaka
+        summa += -10-10+10 # pysty
+        summa += -10+10+10-10-10-10-50-30-10+30+10 # yläviisto
+        summa += -10-10+30+30+30+10-10-30 # alaviisto
+
+        score = self.ai.heuristic_value(gameboard)
+
+        self.assertEqual(score, summa)
+    
+    def test_heuristic_value_with_partially_filled_board_pt3(self):
+        gameboard = [[0, 0, 0, 0, 0, 0, 0],
+                     [0, 0, 0, 1, 0, 0, 0],
+                     [0, 0, 0, 1, 0, 0, 0],
+                     [0, 0, 5, 5, 0, 0, 0],
+                     [0, 1, 5, 5, 0, 0, 0],
+                     [1, 5, 1, 1, 1, 5, 0]]
+
+        summa = -10-10-10-10-40+30+30+30+10+30+10 # vaaka
+        summa += -10-10+30+10-10+10 # pysty
+        summa += -10-10+50+30+10+10-10 # yläviisto
+        summa += -10-10-10-10-10+10+10+30+30 # alaviisto
+
+        score = self.ai.heuristic_value(gameboard)
+
+        self.assertEqual(score, summa)
 
     def test_get_moves_with_empty_board(self):
         possible_moves = self.ai.get_moves(self.empty_board)
