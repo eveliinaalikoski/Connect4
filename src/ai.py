@@ -101,6 +101,9 @@ class AI:
             boolean: palauttaa true, jos 4 samaa nappulaa peräkkäin, muuten false
         """
         player = board[row][column]
+        if player == 0:
+            return False
+        
         # directions = [vaaka, pysty, ylösviisto, alasviisto]
         directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
         for drow, dcol in directions:
