@@ -6,14 +6,14 @@
 
 ## Yksikkötestaus
 
-Yksikkötestaus on tehty Unittest-kirjastoa käyttäen. Testeissä testataan luokkien Connect4 ja AI toimintoja, sillä nämä sisältävät ohjelmalogiikan funktioita. Käyttöliittymä ei ole mukana testauksessa.
+Yksikkötestaus on tehty Unittest-kirjastoa käyttäen. Testeissä testataan luokkien Connect4 ja AI toimintoja, sillä nämä sisältävät ohjelmalogiikan funktioita. Käyttöliittymä ei ole mukana testauksessa, joten ei ole myöskään testattu Connect4 luokan handle_click ja ai_turn funktioita, koska ne kutsuvat UI luokan funktioita.
 
 Testauksessa syötteinä on käytetty pelilaudan eri tilanteita: tyhjää lautaa, täyttä lautaa sekä erilaisia osin täytettyjä lautoja.
 
 AI-luokan testeissä testattu, että
 
-- winning_move palauttaa oikean tuloksen kun ei ole voittoa ja kun on voitto
-- heuristic_value laskee oikean arvon pelilaudalle, jossa on yksi siirto ja laudalle mikä on osittain täytetty
+- winning_move palauttaa oikean tuloksen kun ei ole voittoa ja kun on voitto (testattu, että löytää voiton vaaka-, pysty- ja diagonaalisuuntiin)
+- heuristic_value laskee oikean arvon pelilaudalle, jossa on yksi siirto ja muutamalle laudalle mitkä on osittain täytetty
 - get_moves palauttaa oikeat sarakkeet oikeassa järjestyksessä tyhjällä, puoliksi täytetyllä ja täydellä laudalla
 - simulate_move simuloi laudan oikein, kun sille annetaan alkuperäinen lauta, kolumni johon siirto tehdään ja pelaaja jonka siirto on
 - minimax näkee voittotilanteen 5 siirron päässä ja osaa tehdä oikeat siirrot, kun 5 siirron päässä on varma voitto, lisäksi siirroille palautuu oikea voittoarvo 100000
