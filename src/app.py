@@ -101,14 +101,14 @@ class Connect4:
             col, value = self.ai.minimax(
                 self.board, depth, -inf, inf, True, None)
 
-            if value == 100000 or value == -100000:
+            if value in (-100000, 100000):
                 break
 
             depth += 1
 
         end = time.time()
         print(f"AI calculated to depth {depth} in {end-start:.2f} s")
-                
+
         success, move = self.make_move(col, self.current_player)
         if success:
             self.ui.draw_board(self.board)

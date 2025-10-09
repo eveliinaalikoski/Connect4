@@ -14,11 +14,11 @@ class TestAI(unittest.TestCase):
 
     def test_winning_move_with_empty_board(self):
         gameboard = self.empty_board
-        
+
         result = self.ai.winning_move(gameboard, 5, 3)
 
         self.assertEqual(result, False)
-    
+
     def test_winning_move_with_no_win(self):
         gameboard = self.empty_board
         gameboard[5][2] = 1
@@ -83,7 +83,7 @@ class TestAI(unittest.TestCase):
         score = self.ai.heuristic_value(gameboard)
 
         self.assertEqual(score, summa)
-    
+
     def test_heuristic_value_with_partially_filled_board_pt1(self):
         gameboard = [[0, 0, 0, 0, 0, 0, 0],
                      [0, 0, 0, 5, 0, 0, 0],
@@ -91,16 +91,16 @@ class TestAI(unittest.TestCase):
                      [0, 0, 0, 1, 5, 0, 0],
                      [0, 0, 1, 5, 1, 1, 0],
                      [0, 0, 1, 1, 5, 1, 5]]
-                
-        summa = 10+10+10+10+10+30+30+30-10-30 # vaaka
-        summa += -30-10+30-30-10+10 # pysty
-        summa += 10+10+10+10+10+30-30 # yläviisto
-        summa += 30+30+30-50-30-10+30+10-30 # alaviisto
+
+        summa = 10+10+10+10+10+30+30+30-10-30  # vaaka
+        summa += -30-10+30-30-10+10  # pysty
+        summa += 10+10+10+10+10+30-30  # yläviisto
+        summa += 30+30+30-50-30-10+30+10-30  # alaviisto
 
         score = self.ai.heuristic_value(gameboard)
 
         self.assertEqual(score, summa)
-    
+
     def test_heuristic_value_with_partially_filled_board_pt2(self):
         gameboard = [[0, 0, 0, 0, 0, 0, 0],
                      [0, 0, 1, 0, 0, 0, 0],
@@ -108,16 +108,16 @@ class TestAI(unittest.TestCase):
                      [0, 0, 1, 0, 5, 0, 0],
                      [0, 0, 1, 0, 5, 0, 0],
                      [0, 1, 5, 1, 5, 0, 5]]
-        
-        summa = -10-10-10+10-10-10+10-10+10 # vaaka
-        summa += -10-10+10 # pysty
-        summa += -10+10+10-10-10-10-50-30-10+30+10 # yläviisto
-        summa += -10-10+30+30+30+10-10-30 # alaviisto
+
+        summa = -10-10-10+10-10-10+10-10+10  # vaaka
+        summa += -10-10+10  # pysty
+        summa += -10+10+10-10-10-10-50-30-10+30+10  # yläviisto
+        summa += -10-10+30+30+30+10-10-30  # alaviisto
 
         score = self.ai.heuristic_value(gameboard)
 
         self.assertEqual(score, summa)
-    
+
     def test_heuristic_value_with_partially_filled_board_pt3(self):
         gameboard = [[0, 0, 0, 0, 0, 0, 0],
                      [0, 0, 0, 1, 0, 0, 0],
@@ -126,10 +126,10 @@ class TestAI(unittest.TestCase):
                      [0, 1, 5, 5, 0, 0, 0],
                      [1, 5, 1, 1, 1, 5, 0]]
 
-        summa = -10-10-10-10-40+30+30+30+10+30+10 # vaaka
-        summa += -10-10+30+10-10+10 # pysty
-        summa += -10-10+50+30+10+10-10 # yläviisto
-        summa += -10-10-10-10-10+10+10+30+30 # alaviisto
+        summa = -10-10-10-10-40+30+30+30+10+30+10  # vaaka
+        summa += -10-10+30+10-10+10  # pysty
+        summa += -10-10+50+30+10+10-10  # yläviisto
+        summa += -10-10-10-10-10+10+10+30+30  # alaviisto
 
         score = self.ai.heuristic_value(gameboard)
 
