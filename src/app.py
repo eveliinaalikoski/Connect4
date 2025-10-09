@@ -76,6 +76,7 @@ class Connect4:
                 if self.full_board():
                     self.game_over = True
                     self.ui.update_topbar("No more moves!")
+                    print("No move moves!")
                     return
 
                 self.current_player = 5
@@ -106,7 +107,7 @@ class Connect4:
             depth += 1
 
         end = time.time()
-        print(f"Ai calculated to depth {depth} in {end-start:.2f} s")
+        print(f"AI calculated to depth {depth} in {end-start:.2f} s")
                 
         success, move = self.make_move(col, self.current_player)
         if success:
@@ -121,6 +122,7 @@ class Connect4:
             if self.full_board():
                 self.game_over = True
                 self.ui.update_topbar("No more moves!")
+                print("No move moves!")
                 return
             self.current_player = 1
             print("Make your move")
