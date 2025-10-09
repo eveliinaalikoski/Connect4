@@ -14,6 +14,10 @@ Pelin käynnistyessä alustetaan tkinter:in avulla graafinen pelilauta, mikä on
 
 Alfa-beta karsinnalla minimax algoritmin aikavaatimus on hitaimmillaan O(b^d) ja nopeimmillaan O(sqrt(b^d)), missä d on haun syvyys ja b on haarautumisluku eli vaihtoehtojen määrä. Alfa-beta karsinta sekä optimoinnit, kuten iteratiivinen syveneminen ja siirtojen järjestäminen, lisäävät algoritmin tehokkuutta.
 
+## Laajojen kielimallien käyttö
+
+Käytin ChatGPT:tä joidenkin bugitilanteiden ymmärtämiseen ja ratkaisemiseen. Käytin sitä myös selittämään kahden vaihtoehtoisen tavan välillä, kumpi on tehokkaampi tai hyödyllisempi juuri siihen tilanteeseen.
+
 ## Lähteet
 
 [Wikipedia, Alpha-beta pruning](https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning)
