@@ -12,6 +12,13 @@ class TestAI(unittest.TestCase):
         self.empty_board = [[0 for col in range(self.ai.cols)]
                             for row in range(self.ai.rows)]
 
+    def test_winning_move_with_empty_board(self):
+        gameboard = self.empty_board
+        
+        result = self.ai.winning_move(gameboard, 5, 3)
+
+        self.assertEqual(result, False)
+    
     def test_winning_move_with_no_win(self):
         gameboard = self.empty_board
         gameboard[5][2] = 1
