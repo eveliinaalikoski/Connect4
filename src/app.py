@@ -13,8 +13,8 @@ class Connect4:
         self.root = root
         self.rows = 6
         self.cols = 7
-        self.board = [[0 for col in range(self.cols)]
-                      for row in range(self.rows)]
+        self.board = [[0 for _ in range(self.cols)]
+                      for _ in range(self.rows)]
         self.piece_size = 80
         self.current_player = 1
         self.game_over = False
@@ -69,14 +69,14 @@ class Connect4:
                 self.root.update_idletasks()
                 if self.ai.winning_move(self.board, move[0], move[1]):
                     self.game_over = True
-                    self.ui.update_topbar("You win!")
+                    self.ui.toplabel.config(text="You win!")
                     print("YOU WIN")
                     return
 
                 if self.full_board():
                     self.game_over = True
-                    self.ui.update_topbar("No more moves!")
-                    print("No move moves!")
+                    self.ui.toplabel.config(text="No more moves!")
+                    print("No more moves!")
                     return
 
                 self.current_player = 5
@@ -115,13 +115,13 @@ class Connect4:
 
             if self.ai.winning_move(self.board, move[0], move[1]):
                 self.game_over = True
-                self.ui.update_topbar("AI wins!")
+                self.ui.toplabel.config(text="AI wins!")
                 print("AI WINS")
                 return
 
             if self.full_board():
                 self.game_over = True
-                self.ui.update_topbar("No more moves!")
+                self.ui.toplabel.config(text="No more moves!")
                 print("No move moves!")
                 return
             self.current_player = 1

@@ -65,6 +65,3 @@ class UI:
                                            y1 + self.game.piece_size - 5,
                                            fill=color
                                            )
-
-    def update_topbar(self, text):
-        self.toplabel.config(text=text)
