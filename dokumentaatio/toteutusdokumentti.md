@@ -16,7 +16,7 @@ Alfa-beta karsinnalla minimax algoritmin aikavaatimus on hitaimmillaan O(b^d) ja
 
 ## Laajojen kielimallien käyttö
 
-Käytin ChatGPT:tä joidenkin bugitilanteiden ymmärtämiseen ja ratkaisemiseen. Käytin sitä myös selittämään kahden vaihtoehtoisen tavan välillä, kumpi on tehokkaampi tai hyödyllisempi juuri siihen tilanteeseen.
+Käytin ChatGPT:tä joidenkin bugitilanteiden ymmärtämiseen ja esittelemään ratkaisuehdotuksia. Käytin sitä myös selittämään kahden vaihtoehtoisen tavan välillä, kumpi on tehokkaampi tai hyödyllisempi juuri siihen tilanteeseen.
 
 ## Lähteet
 
@@ -25,3 +25,5 @@ Käytin ChatGPT:tä joidenkin bugitilanteiden ymmärtämiseen ja ratkaisemiseen.
 [Youtube, Minimax algorithm with Alpha-Beta pruning with Connect 4](https://www.youtube.com/watch?v=DV5d31z1xTI&list=WL&index=1&t=196s)
 
 [Minimax ja alfa-beta-karsinta, Jaakko Karhunen](https://jyx.jyu.fi/bitstreams/991dbfe7-5ba5-4c0e-9c8d-5ad4fc2022e7/download)
+
+[Tutorialspoint, update_idletasks](https://www.tutorialspoint.com/what-s-the-difference-between-update-and-update-idletasks-in-tkinter)
