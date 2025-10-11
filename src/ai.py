@@ -60,10 +60,10 @@ class AI:
             for col in possible_moves:
                 child_board, (r, c) = self.simulate_move(
                     board, col, maximizing_player)
-                new_value = self.minimax(
+                _, new_value = self.minimax(
                     child_board, depth - 1, alpha, beta, False, (r, c))
-                if new_value[1] > value:
-                    value = new_value[1]
+                if new_value > value:
+                    value = new_value
                     column = col
                 if value >= beta:
                     break
@@ -77,10 +77,10 @@ class AI:
         for col in possible_moves:
             child_board, (r, c) = self.simulate_move(
                 board, col, maximizing_player)
-            new_value = self.minimax(
+            _, new_value = self.minimax(
                 child_board, depth - 1, alpha, beta, True, (r, c))
-            if new_value[1] < value:
-                value = new_value[1]
+            if new_value < value:
+                value = new_value
                 column = col
             if value <= alpha:
                 break
@@ -136,8 +136,11 @@ class AI:
 
     def heuristic_value(self, board):
         """laskee heuristisen arvon pelitilanteelle apulistan
-        sum_scores avulla, missä pistemäärä saadaan ikkunan summan indeksistä,
-
+        sum_scores avulla, missä listasta summan indeksin kohdalta saadaan oikea pistemäärä
+        - yhen nappulan suorasta saa 10 p
+        - kahden suorasta 30 p
+        - 3 kolmen suorasta 50 p
+        pisteisiin vaaditaan, että suoralla ei ole vastustajan nappuloita
         tekoälyn (5) suorista saa positiivisia pisteitä ja pelaajan (1) negatiivisia
 
         Args:
