@@ -27,3 +27,5 @@ Käytin ChatGPT:tä joidenkin bugitilanteiden ymmärtämiseen ja esittelemään 
 [Minimax ja alfa-beta-karsinta, Jaakko Karhunen](https://jyx.jyu.fi/bitstreams/991dbfe7-5ba5-4c0e-9c8d-5ad4fc2022e7/download)
 
 [Tutorialspoint, update_idletasks](https://www.tutorialspoint.com/what-s-the-difference-between-update-and-update-idletasks-in-tkinter)
+
+[Pytest Mock assert methods](https://dag7.it/appunti/dev/Pytest/What-Are-Pytest-Mock-Assert-Called-Methods-and-How-To-Leverage-Them)
