@@ -14,6 +14,14 @@ Pelin käynnistyessä alustetaan tkinter:in avulla graafinen pelilauta, mikä on
 
 Alfa-beta karsinnalla minimax algoritmin aikavaatimus on hitaimmillaan O(b^d) ja nopeimmillaan O(sqrt(b^d)), missä d on haun syvyys ja b on haarautumisluku eli vaihtoehtojen määrä. Alfa-beta karsinta sekä optimoinnit, kuten iteratiivinen syveneminen ja siirtojen järjestäminen, lisäävät algoritmin tehokkuutta.
 
+## Projektin parannusehdotukset
+
+Algoritmin heuristiikkafunktiota pystyisi vieläkin parantamaan. Tällä hetkellä funktio tutkii kaikki neljän ruudun ikkunat ja antaa pisteitä ikkunoista missä on vain tekoälyn nappuloita ja tyhjiä tai pelaajan nappuloita ja tyhjiä. Tällöin esimerkiksi ikkunoista, mitkä on alla kuvassa vihreällä ja oranssilla suoralla, saadaan molemmista ikkunoista -50 pistettä. Kuitenkin huomataan, että vihreän ikkunan tilanteessa ei pystytä seuraavalla vuorolla voittaa. Toisin kuin oranssin ikkunan tilanteessa, jossa neljän suora voidaan saavuttaa yhdellä siirrolla. Tämän tyylisten tilanteiden huomioiminen parantaisivat heuristiikkaa
+
+![Esimerkki pelilaudasta](./gameboard_example.png)
+
+Pelin ulkoasu voisi olla viimeistellympi ja voittoriviä olisi voinut korostaa jollain tavoin, jotta on selvää heti, mistä voitto muodostui. Ulkoasu ei kuitenkaan ollut projektin pääasia, joten jätin tämän tekemättä.
+
 ## Laajojen kielimallien käyttö
 
 Käytin ChatGPT:tä joidenkin bugitilanteiden ymmärtämiseen ja esittelemään ratkaisuehdotuksia. Käytin sitä myös selittämään kahden vaihtoehtoisen tavan välillä, kumpi on tehokkaampi tai hyödyllisempi juuri siihen tilanteeseen.
