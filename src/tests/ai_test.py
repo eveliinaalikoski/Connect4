@@ -9,8 +9,8 @@ class TestAI(unittest.TestCase):
         self.ai = AI()
         self.game = Connect4(root=None)
 
-        self.empty_board = [[0 for col in range(self.ai.cols)]
-                            for row in range(self.ai.rows)]
+        self.empty_board = [[0 for _ in range(self.ai.cols)]
+                            for _ in range(self.ai.rows)]
 
     def test_winning_move_with_empty_board(self):
         gameboard = self.empty_board
@@ -156,14 +156,12 @@ class TestAI(unittest.TestCase):
         self.assertEqual(possible_moves, correct_moves)
 
     def test_get_moves_with_full_board(self):
-        gameboard = [[1 for col in range(self.ai.cols)]
-                     for row in range(self.ai.rows)]
+        gameboard = [[1 for _ in range(self.ai.cols)]
+                     for _ in range(self.ai.rows)]
 
         possible_moves = self.ai.get_moves(gameboard)
 
-        correct_moves = []
-
-        self.assertEqual(possible_moves, correct_moves)
+        self.assertEqual(possible_moves, [])
 
     def test_simulate_move_with_partially_filled_board(self):
         gameboard = self.empty_board
@@ -174,10 +172,9 @@ class TestAI(unittest.TestCase):
 
         new_board = self.ai.simulate_move(gameboard, 2, False)
 
-        correct_board = gameboard
-        correct_board[4][2] = 1
+        gameboard[4][2] = 1
 
-        self.assertEqual(new_board, (correct_board, (4, 2)))
+        self.assertEqual(new_board, (gameboard, (4, 2)))
 
     def test_minimax_with_a_win_in_exactly_five_moves(self):
         # valitaan pelitilanne, mistä löytyy varma voitto 5 siirrolla
